@@ -1,5 +1,0 @@
-What to do:
-
-1. Make a readme
-2. make it more presentable (coding part)
-3. make new dashboards using tableau/PowerBI
