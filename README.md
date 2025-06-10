@@ -1,44 +1,76 @@
-# Stroke Prediction using PySpark and Tableau
+# 🧠 Stroke Prediction using Machine Learning and PySpark
 
-This project applies **machine learning techniques** and **data visualization** to predict the occurrence of strokes using demographic and health data. The primary model used is **Random Forest**, implemented with **PySpark**, with visual insights generated using **Tableau**.
-
-## 📁 Project Overview
-
-- **Objective**: Predict the likelihood of a stroke using a healthcare dataset.
-- **Dataset**: [Stroke Prediction Dataset on Kaggle](https://www.kaggle.com/datasets/fedesoriano/stroke-prediction-dataset)
-- **Technologies Used**:  
-  - PySpark (MLlib)  
-  - SMOTE for class imbalance  
-  - Tableau  
-  - Pandas, Seaborn, Matplotlib
+This project aims to predict the likelihood of a person experiencing a stroke based on various health and demographic features. It involves data preprocessing, feature engineering, class balancing using SMOTE, and training models using both traditional machine learning and distributed computing with PySpark.
 
 ---
 
-## 🧠 Key Features
+## 📁 Dataset
 
-- **Data Preprocessing**:  
-  - Imputation of missing BMI values  
-  - Type casting of numerical and categorical columns  
-  - Encoding of categorical features
+The dataset used is the **Stroke Prediction Dataset** from [Kaggle](https://www.kaggle.com/datasets/fedesoriano/stroke-prediction-dataset). It consists of 5,110 records with the following features:
 
-- **Machine Learning with PySpark**:  
-  - Random Forest Classifier  
-  - Feature importance analysis  
-  - Model evaluation with ROC Curve, Confusion Matrix, Accuracy, Precision, Recall, and F1 Score
-
-- **Class Imbalance Handling**:  
-  - Synthetic Minority Oversampling Technique (SMOTE)
-
-- **Data Visualization**:  
-  - Tableau dashboards for age, glucose levels, gender, BMI, smoking status, and stroke occurrence  
-  - Heatmaps, treemaps, histograms, line graphs, and box plots
+- **Demographics**: `gender`, `age`, `ever_married`, `work_type`, `Residence_type`
+- **Health indicators**: `hypertension`, `heart_disease`, `avg_glucose_level`, `bmi`, `smoking_status`
+- **Target variable**: `stroke` (1 = stroke occurred, 0 = no stroke)
 
 ---
 
-## 🛠 Setup & Installation
+## 🔍 Feature Extraction
 
-1. Install and configure Apache Spark and Hadoop locally.
-2. Install required Python libraries:
+The following steps were taken during preprocessing:
 
-```bash
-pip install pandas matplotlib seaborn findspark imbalanced-learn
+- Handled missing values in the `bmi` column.
+- Encoded categorical variables using Label Encoding and One-Hot Encoding.
+- Normalized numerical features like `avg_glucose_level` and `bmi`.
+- Constructed a final feature matrix for model training.
+
+---
+
+## ⚖️ SMOTE (Synthetic Minority Over-sampling Technique)
+
+The dataset is highly imbalanced with only about 5% positive stroke cases. To mitigate this:
+
+- Applied SMOTE to oversample the minority class in the training data.
+- Helped improve recall and overall model balance without sacrificing too much precision.
+
+---
+
+## ⚙️ PySpark Integration
+
+To enable distributed processing and scalability:
+
+- The dataset was converted into a **PySpark DataFrame**.
+- Used `VectorAssembler` to create feature vectors.
+- Trained a `RandomForestClassifier` using PySpark MLlib.
+- Built a streamlined pipeline for feature transformation and modeling.
+
+---
+
+## 📊 Results
+
+Model performance was assessed using:
+
+- **Accuracy**, **Precision**, **Recall**, **F1-Score**
+- **Confusion Matrix**
+- **ROC-AUC Curve**
+
+### Highlights:
+- SMOTE improved the model’s sensitivity to the minority class.
+- PySpark enabled scalable training for larger datasets.
+- The final model achieved a balanced trade-off across key performance metrics.
+
+---
+
+## 🚀 Technologies Used
+
+- Python (Pandas, NumPy, Scikit-learn)
+- PySpark (MLlib, DataFrame API)
+- Imbalanced-learn (SMOTE)
+- Matplotlib, Seaborn (visualizations)
+
+---
+
+## 📌 Future Work
+
+- Hyperparameter tuning using GridSearchCV or Spark's `CrossValidator`.
+- Deployment of the trained model as a REST API.
+- Incorporation of time-series or patient history data for improved prediction accuracy.
